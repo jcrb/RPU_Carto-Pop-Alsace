@@ -1,0 +1,277 @@
+---
+title: "Cartographie"
+author: "jcb"
+date: "20 juillet 2015"
+output:
+  html_document:
+    number_sections: yes
+    toc: yes
+---
+
+```{r init, echo=FALSE, comment="", message=FALSE}
+# librairies cartographiques de R
+source("Routines/lib_carto.R")
+```
+
+Les fichiers cartographiques de base
+=====================================
+
+Le fichier IGN des communes
+---------------------------
+
+La source principale est le fichier IGN des communes au format _shapefile_ (SHP)
+intitulé __GEOFLA_1-1_SHP_LAMB93_FR-ED111/COMMUNES__ de l'IGN qui couvre la France entière.
+
+Pour créer les fichiers utiles, il faut d'abord charger tout le fichier IGN pour extraire les données propres à l'Alsace. Cette opération est longue. Elle n'est à faire qu'une fois. Pour les autres utilisations on peut faire appel directement aux fichiers créés:
+
+- __carto67.rda__ pour le Bas-Rhin (st)
+- __carto68.rda__ pour le Haut-Rhin (hr)
+- __carto_alsace.Rda__ pour la région (als)
+
+Ce sont des fichiers de type _shapefile_ comprenant deux parties:
+
+- les __polygones__ dessinant le contour des communes (coordonnées Lambert93)
+- un dataframe contenant les __données attributaires__ contenants 18 variables:
+    - "ID_GEOFLA"  
+    - "CODE_COMM"  
+    - "INSEE_COM"  
+    - "NOM_COMM"   
+    - "STATUT" (commune ordinaire, préfecture de région, préfecture, sous-préfecture)
+    - "X_CHF_LIEU" (coordonnées Lambert 93)
+    - "Y_CHF_LIEU" 
+    - "X_CENTROID"
+    - "Y_CENTROID" 
+    - "Z_MOYEN"    
+    - "SUPERFICIE" 
+    - "POPULATION" 
+    - "CODE_CANT"  
+    - "CODE_ARR"   
+    - "CODE_DEPT"  
+    - "NOM_DEPT"  
+    - "CODE_REG"   
+    - "NOM_REGION"
+    
+  Outre les polygones dessinant les limites administratives des communes, il est possible de représenter:
+  
+  - la position du centre la commune
+  - le nom de la commune
+  - le statut de la commune: préfecture régionale, préfecture, sous-préfecture.
+
+Il est possible de fusionner les polygones des communes (méthode __unionSpatialPolygons__) au niveau du canton, de l'arrondissement, du département, de la région pour créer des fichiers de limites d'arrondissement ou de cantons:
+
+  - __contour_arr67.Rda__
+  - __contour_arr68.Rda__
+  - __contour_cantons67.Rda__
+  - __contour_cantons68.Rda__
+  - __contour_cantons_alsace.Rda__
+  - __contour_dep_als.Rda__
+  - __contour_region_als.Rda__
+  
+Ces fichiers constituent autant de couches qui peuvent se combiner pour réaliser des cartes de plus en plus complexes.
+
+L'affichage des cartes se fait par la méthode __plot(nom_fichier_carte)__. Pour superposer une seconde carte on utilise __plot(nom_fichier_carte, add = TRUE)__.
+
+### En pratique
+
+Lecture du fichier des communes
+```{}
+file<-"~/Documents/cartographie/Donnee_IGN/GEOFLA_1-1_SHP_LAMB93_FR-ED111/COMMUNES/COMMUNE.SHP"
+com<-readShapeSpatial(file)
+```
+Création de 3 fichiers spécifiques pour le bas-Rhin, le haut-Rhin et l'Alsace.
+
+### bas-Rhin:
+```{}
+st<-com[com$CODE_DEPT==67,]
+save(st,file="carto67.rda")
+```
+```{r bas_rhin, echo=TRUE}
+load("Cartofile/carto67.Rda") # st
+plot(st, main = "Communes du bas-Rhin", axes = TRUE)
+```
+
+Détails sur le fichier et les manipulations possibles:
+```{r br_details}
+class(st)
+names(st)
+```
+L'objet _SpatialPolygonsDataFrame_ __st__ contient les slots suivants:
+```{r}
+slotNames(st)
+
+```
+
+Les __données attributaires__ sont contenues dans le _slot_ __data__, dataframe dont la première ligne contient:
+```{r}
+st@data[1,]
+```
+Remarques:
+
+- X_CHF_LIEU et Y_CHF_LIEU sont les coordonnées Lambert93 du centre de la ville. Il faut les multiplier par 100 por qu'elles soient cohérentes avec l'échelle de la carte.
+- Même remarque pour X_CENTROID, Y_CENTROID coordonnées du centre de la commune.
+- Le STATUT de la commune (préfecture, etc.) est en minuscule accentuées au format _latin1_ (Windows), ce qui fait apparaître des caractères anormaux si on travaille en UTF8. On peut corriger ce problème avec l'instruction:
+
+```{}
+b <- as.character(st$STATUT)
+Encoding(b) <- "latin1"
+st$STATUT <- b
+```
+Nombre de communes dans le bas-Rhin:
+```{r}
+nrow(st@data)
+```
+
+Population du bas-Rhin:
+```{r}
+sum(st$POPULATION) * 1000
+```
+
+
+Le slot __bbox__ contient les limites du rectangle englobant dans un tableau:
+```{r}
+st@bbox
+```
+
+
+### Haut-Rhin
+
+```{}
+hr<-com[com$CODE_DEPT==68,]
+save(hr,file="carto68.rda")
+```
+dessine les communes  du haut-rRhin
+```{r hautrhin}
+load("Cartofile/carto68.rda") # hr
+plot(hr, main = "Communes du bas-Rhin", axes = TRUE)
+hr@bbox
+```
+
+### Alsace
+
+```{}
+als<-com[com$CODE_REG==42,]
+save(als,file="Cartofile/carto_alsace.rda")
+```
+dessine toutes les communes d'Alsace
+```{r plot_alsace}
+load("Cartofile/carto_alsace.rda")
+plot(als, main = "Communes d'Alsace", axes = TRUE)
+als@bbox
+```
+
+Autres découpages administratifs
+--------------------------------
+
+### Arrondissements
+
+### Cantons
+
+Les codes postaux
+-----------------
+
+Les codes postaux (CP) méritent une place à part car c'est une information présente dans chaque RPU. Cette information est utilisée notamment pour mesurer le __taux de recours__ au structures d'urgence.
+
+
+### Base officielle des codes postaux
+
+Ce jeu de données provient d'un service public certifié
+Publié le 6 novembre 2014 et mis à jour le 6 novembre 2014 par La Poste
+
+Fichier de correspondance entre les codes communes (INSEE) et les codes postaux au format csv.
+
+Ce fichier comprend:
+
+    - Le code commune INSEE
+    - Le nom de la commune
+    - Le code postal
+    - Le libellé d’acheminement
+
+Il correspond aux codes postaux de France (métropole et DOM), ceux des TOM, ainsi que MONACO (37 173 lignes).
+
+- SHA1: e54c8683bd95c210ff0fec48673b2138138c427e
+- source: https://www.data.gouv.fr/fr/datasets/base-officielle-des-codes-postaux/
+- nom du fichier: code_postaux_v201410.csv
+
+On dispose d'un fichier _shapefile_ du découpage territorial en zone de codes postaux.
+
+```{}
+NOTE: OpenDataSoft est une société française proposant une solution Open Data complète. Elle a notamment réalisé le merging des fichier des codes postaux avec les donnée GEOFLA® Communes versin 2013 (la population communale est celle de 2013).
+
+SOURCE: http://public.opendatasoft.com/explore/dataset/code-insee-postaux-geoflar/?tab=map&location=3,18.5278,-2.98684&basemap=mapquest
+
+ALSACE: http://public.opendatasoft.com/explore/dataset/code-insee-postaux-geoflar/?tab=table&q=ALSACE&location=3,18.5278,-2.98684&basemap=mapquest
+```
+
+### Fond de carte des codes postaux
+
+- source: https://www.data.gouv.fr/fr/datasets/fond-de-carte-des-codes-postaux/
+- formats: shp et mapinfo
+- URL: http://www.geoclip.fr/codes_postaux.zip
+- Format: ZIP
+- Créée le: 7 mai 2014 04:08
+- le fichier a été réalisé par Emc3 éditeur du logiciel Géoclip, générateur d'observatoires statistiques et cartographiques.
+
+
+Découpage ARS
+=============
+
+L'ARS Alsace a publié deux découpages:
+
+- territoires de santé (TS)
+- zones de proximité (ZP)
+
+L'ensemble des données est rassemblé dans le fichier __zp.csv__ qui est du type _dataframe_.
+```{r}
+file <- "Cartofile/zp.csv"
+zp <- read.csv(file)
+names(zp)
+```
+A la colonne LIBELLE.DES.TERRITOIRES.DE.SANTE on ajoute une colonne CODE.TS qui ne conserve que le n° du territoire de santé:
+```{r}
+library(stringr)
+zp$CODE.TS <- str_extract(zp$LIBELLE.DES.TERRITOIRES.DE.SANTE, "\\d")
+
+```
+
+Découpage en Iris de l'INSEE
+============================
+
+Contours...Iris
+---------------
+En 2015, l'IGN publie en opendata la cartographie des IRIS. Coédition INSEE et IGN, Contours...Iris® est un fond numérisé des îlots Iris définis par l'INSEE pour les besoins des recensements sur l'ensemble des communes de plus de 10 000 habitants et la plupart des communes de 5 000 à 10 000 habitants.
+
+Contours...Iris® édition 2014 est réalisé avec les résultats du recensement de la population 2011, les données INSEE de 2014 et l'édition 2014 du produit GEOFLA®.
+
+Formats: Shapefile
+
+Projections disponibles
+
+Dans les systèmes géodésiques légaux :
+
+En métropole : Lambert-93
+
+En outre-mer : Projections UTM
+
+Source: http://professionnels.ign.fr/contoursiris
+
+Contour des IRIS INSEE tout en un
+---------------------------------
+Développement opendata disponible sur le site [opendata.gouv](https://www.data.gouv.fr/fr/datasets/contour-des-iris-insee-tout-en-un/). Contours géographiques des IRIS en un seul fichier et dans une seule projection (WGS84).
+
+L'ensembles des IRIS INSEE des fichiers initialement publiés par l'IGN, dans un seul fichier Shapefile et dans une projection unique (WGS84)
+
+URL
+    https://www.data.gouv.fr/s/resources/contour-des-iris-insee-tout-en-un/20150428-161348/iris-2013-01-01.zip
+    
+- Format: zip
+- Type MIME: application/zip
+- Taille: 348.0 MB
+- crc: 05ce5cdf0dad75b4878ee3d29957338169686deb
+- Créée le: 28 avril 2015 16:14
+
+Bibliographie
+==============
+
+Ref: Notes on spatial data operations in R ([Frank Davenport mars 2013](https://dl.dropboxusercontent.com/u/9577903/broomspatial.pdf))
+
+voir aussi: http://help.nceas.ucsb.edu/r:spatial
