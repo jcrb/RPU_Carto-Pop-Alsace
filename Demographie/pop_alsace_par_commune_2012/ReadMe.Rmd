@@ -1,0 +1,23 @@
+---
+title: "Population Alsace par communes 2012"
+author: "jcb"
+date: "27 août 2015"
+output: html_document
+---
+
+Population alsacienne au dernier recensement (2012) et mis à jour en janvier 2014. Référence légale actuelle.
+
+__[Populations légales 2012 des départements et des collectivités d'outre-mer]__(http://www.insee.fr/fr/ppp/bases-de-donnees/recensement/populations-legales/france-departements.asp?annee=2012)
+
+Les populations légales millésimées 2012 entrent en vigueur le 1er janvier 2015. Elles ont pour date de référence statistique le 1er janvier 2012.
+
+Chaque fichier départemental contient les populations légales des niveaux géographiques suivants : communes, arrondissements municipaux pour Paris, Lyon et Marseille, cantons, arrondissements, communes associées et fractions cantonales de communes .
+
+- [bas-Rhin](http://www.insee.fr/fr/ppp/bases-de-donnees/recensement/populations-legales/pages2014/xls/dep67.xls)
+- [haut-Rhin](http://www.insee.fr/fr/ppp/bases-de-donnees/recensement/populations-legales/pages2014/xls/dep68.xls)
+
+Ce sont des classeurs excel comportant plusieurs feuilles. L'onglet __communes__ est sauvegardé au format .csv, sep = ',', skip = 7:
+
+- __dep67.csv__
+- __dep68.csv__
+

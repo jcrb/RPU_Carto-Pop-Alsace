@@ -30,5 +30,14 @@ Cartographie
     - géolocalisation
 - Grande région Alsace-Champagne-Lorraine (ACAL)
 
+Le dossier cartographie comporte les sous-dossier:
+
+- Cartofile: fichier SHP ou CSV directement utilisables par les programmmes
+- SourceFile: fichier source récupérés sur internet
+    - CONTOURS-IRIS_2-0__SHP_LAMB93_FXX_2014-01-01.7z
+    - code-insee-postaux-geoflar-Alsace_2013: fichier SHP résultant du croisement des codes Insee, Postaux et Geofla.
+    - code_postaux_v201410.csv: 4 variables (code INSEE, nom commune, code postal, libellé d'acheminement)
+    - codes_postaux: dossier SHP contenant le tracé des codes postaux
+    
 Démographie
 -----------

@@ -1,0 +1,64 @@
+---
+title: "Population par territoire de santé et ZP"
+author: "jcb"
+date: "30 août 2015"
+output: html_document
+---
+
+On veut connaître la ventilation de la population alsacienne par __territoire de santé__ (TS) et par __zone de proximité__ (ZP).
+
+Pour cela on dispose de tois fichiers:
+
+- la population du bas-Rhin par commune (Demographie/pop_alsace_par_commune_2012/dep67.csv)
+- lapopulation du haut-Rhin par commune (Demographie/pop_alsace_par_commune_2012/dep68.csv)
+- le fichier des communes par TS et ZP (files/zp.csv)
+
+Etape 1, créer un fichier de la population par communes en Alsace __pop.als.2012__:
+```{}
+path.console <- "Demographie/"
+path <- "../"
+f67 <- read.csv(paste0(path, "pop_alsace_par_commune_2012/dep67.csv"), skip = 7)
+f68 <- read.csv(paste0(path, "pop_alsace_par_commune_2012/dep68.csv"), skip = 7)
+# il faut corriger le code.commune dans zp qui n'est pas au format INSEE. Pour cela il faut mttre le dode commune sur 5 caractères, le n° du dep + code commune sur 3 caractères, si nécessaire en ajoutant 00 ou 0 devant le n° de commune. Pour cela on utilise la fonction substrRight. Enfin on transforme le résultat en entier pour qu'il soit compatible avec als2012.
+# source de la fonction [substrRight](http://stackoverflow.com/questions/7963898/extracting-the-last-n-characters-from-a-string-in-r)
+substrRight <- function(x, n){substr(x, nchar(x)-n+1, nchar(x))}
+# correction
+f67$Code.commune <- as.integer(paste0("67", substrRight(paste0("000",f67$Code.commune), 3)))
+f68$Code.commune <- as.integer(paste0("68", substrRight(paste0("000",f68$Code.commune), 3)))
+
+als2012 <- rbind(f67, f68)
+names(als2012)
+# sauvegarde du fichier
+write.csv(als2012, file = paste0(path, "pop_alsace_par_commune_2012/als2012.csv"))
+```
+
+Etape 2, récupérer le fichier des TS et zp
+```{r}
+path.console <- ""
+path <- "../../"
+zp <- read.csv(paste0(path, "files/zp.csv"))
+```
+
+Etape 3, merger les fichiers __als2012__ et __zp__.
+```{r}
+path.console <- "Demographie/"
+path <- "../"
+als2012 <- read.csv(paste0(path, "pop_alsace_par_commune_2012/als2012.csv"))
+
+merge.als.2012 <- merge(als2012, zp, by.x = "Code.commune", by.y = "CODE.COMMUNE", all.x = TRUE)
+```
+
+Population 2012 par territoire de santé
+---------------------------------------
+```{r}
+n.ts <- tapply(merge.als.2012$Population.municipale, merge.als.2012$LIBELLE.DES.TERRITOIRES.DE.SANTE, sum)
+n.ts
+```
+
+Population 2012 par zone de proximité
+---------------------------------------
+```{r}
+n.zp <- tapply(merge.als.2012$Population.municipale, merge.als.2012$LIBELLE.DES.ZONES.DE.PROXIMITE, sum)
+n.zp
+```
+

@@ -1,21 +1,8 @@
----
-title: "Cartographie"
-author: "jcb"
-date: "20 juillet 2015"
-output:
-  pdf_document:
-    number_sections: yes
-    toc: yes
-  html_document:
-    keep_md: yes
-    number_sections: yes
-    toc: yes
----
+# Cartographie
+jcb  
+20 juillet 2015  
 
-```{r init, echo=FALSE, comment="", message=FALSE}
-# librairies cartographiques de R
-source("Routines/lib_carto.R")
-```
+
 
 Les fichiers cartographiques de base
 =====================================
@@ -89,25 +76,59 @@ Création de 3 fichiers spécifiques pour le bas-Rhin, le haut-Rhin et l'Alsace.
 st<-com[com$CODE_DEPT==67,]
 save(st,file="carto67.rda")
 ```
-```{r bas_rhin, echo=TRUE}
+
+```r
 load("Cartofile/carto67.Rda") # st
 plot(st, main = "Communes du bas-Rhin", axes = TRUE)
 ```
 
+![](cartographie_Alsace_files/figure-html/bas_rhin-1.png) 
+
 Détails sur le fichier et les manipulations possibles:
-```{r br_details}
+
+```r
 class(st)
+```
+
+```
+## [1] "SpatialPolygonsDataFrame"
+## attr(,"package")
+## [1] "sp"
+```
+
+```r
 names(st)
 ```
-L'objet _SpatialPolygonsDataFrame_ __st__ contient les slots suivants:
-```{r}
-slotNames(st)
 
+```
+##  [1] "ID_GEOFLA"  "CODE_COMM"  "INSEE_COM"  "NOM_COMM"   "STATUT"    
+##  [6] "X_CHF_LIEU" "Y_CHF_LIEU" "X_CENTROID" "Y_CENTROID" "Z_MOYEN"   
+## [11] "SUPERFICIE" "POPULATION" "CODE_CANT"  "CODE_ARR"   "CODE_DEPT" 
+## [16] "NOM_DEPT"   "CODE_REG"   "NOM_REGION"
+```
+L'objet _SpatialPolygonsDataFrame_ __st__ contient les slots suivants:
+
+```r
+slotNames(st)
+```
+
+```
+## [1] "data"        "polygons"    "plotOrder"   "bbox"        "proj4string"
 ```
 
 Les __données attributaires__ sont contenues dans le _slot_ __data__, dataframe dont la première ligne contient:
-```{r}
+
+```r
 st@data[1,]
+```
+
+```
+##    ID_GEOFLA CODE_COMM INSEE_COM NOM_COMM         STATUT X_CHF_LIEU
+## 22        23       263     67263  LEMBACH Commune simple      10502
+##    Y_CHF_LIEU X_CENTROID Y_CENTROID Z_MOYEN SUPERFICIE POPULATION
+## 22      68888      10486      68896     307       4873        1.7
+##    CODE_CANT CODE_ARR CODE_DEPT NOM_DEPT CODE_REG NOM_REGION
+## 22        34        7        67 BAS-RHIN       42     ALSACE
 ```
 Remarques:
 
@@ -121,19 +142,36 @@ Encoding(b) <- "latin1"
 st$STATUT <- b
 ```
 Nombre de communes dans le bas-Rhin:
-```{r}
+
+```r
 nrow(st@data)
 ```
 
+```
+## [1] 527
+```
+
 Population du bas-Rhin:
-```{r}
+
+```r
 sum(st$POPULATION) * 1000
+```
+
+```
+## [1] 1091000
 ```
 
 
 Le slot __bbox__ contient les limites du rectangle englobant dans un tableau:
-```{r}
+
+```r
 st@bbox
+```
+
+```
+##       min     max
+## x  988703 1082671
+## y 6789936 6895581
 ```
 
 
@@ -144,10 +182,22 @@ hr<-com[com$CODE_DEPT==68,]
 save(hr,file="carto68.rda")
 ```
 dessine les communes  du haut-rRhin
-```{r hautrhin}
+
+```r
 load("Cartofile/carto68.rda") # hr
 plot(hr, main = "Communes du bas-Rhin", axes = TRUE)
+```
+
+![](cartographie_Alsace_files/figure-html/hautrhin-1.png) 
+
+```r
 hr@bbox
+```
+
+```
+##       min     max
+## x  987503 1044932
+## y 6710919 6809526
 ```
 
 ### Alsace
@@ -157,10 +207,22 @@ als<-com[com$CODE_REG==42,]
 save(als,file="Cartofile/carto_alsace.rda")
 ```
 dessine toutes les communes d'Alsace
-```{r plot_alsace}
+
+```r
 load("Cartofile/carto_alsace.rda")
 plot(als, main = "Communes d'Alsace", axes = TRUE)
+```
+
+![](cartographie_Alsace_files/figure-html/plot_alsace-1.png) 
+
+```r
 als@bbox
+```
+
+```
+##       min     max
+## x  987503 1082671
+## y 6710919 6895581
 ```
 
 Autres découpages administratifs
@@ -225,16 +287,23 @@ L'ARS Alsace a publié deux découpages:
 - zones de proximité (ZP)
 
 L'ensemble des données est rassemblé dans le fichier __zp.csv__ qui est du type _dataframe_.
-```{r}
+
+```r
 file <- "Cartofile/zp.csv"
 zp <- read.csv(file)
 names(zp)
 ```
+
+```
+## [1] "CODE.DEP"                         "CODE.COMMUNE"                    
+## [3] "LIBELLE.DES.COMMUNES"             "LIBELLE.DES.TERRITOIRES.DE.SANTE"
+## [5] "CODE.ZONES.DE.PROXIMITE"          "LIBELLE.DES.ZONES.DE.PROXIMITE"
+```
 A la colonne LIBELLE.DES.TERRITOIRES.DE.SANTE on ajoute une colonne CODE.TS qui ne conserve que le n° du territoire de santé:
-```{r}
+
+```r
 library(stringr)
 zp$CODE.TS <- str_extract(zp$LIBELLE.DES.TERRITOIRES.DE.SANTE, "\\d")
-
 ```
 
 Découpage en Iris de l'INSEE
@@ -304,15 +373,3 @@ Bibliographie
 Ref: Notes on spatial data operations in R ([Frank Davenport mars 2013](https://dl.dropboxusercontent.com/u/9577903/broomspatial.pdf))
 
 voir aussi: http://help.nceas.ucsb.edu/r:spatial
-
-Utilisation de readOGR{rgdal}
-=============================
-    C'est la méthodes préconisée par Davenport. Je suis arrivé à la faire fonctionner qu'en imposant le directory où sont les fichiers IGN
-```{r}
-wd <- getwd()
-file<-"~/Documents/cartographie/Donnee_IGN/GEOFLA_1-1_SHP_LAMB93_FR-ED111/COMMUNES"
-setwd(file)
-ds<-readOGR(dsn="COMMUNE.shp",layer="COMMUNE")
-summary(ds)
-str(ds,2)
-```

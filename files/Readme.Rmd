@@ -1,0 +1,18 @@
+---
+title: "Files - README"
+author: "jcb"
+date: "30 août 2015"
+output: html_document
+---
+
+
+Le dossier __files__ contient des fichiers pouvant servir aussi bien à la cartographie, qu'à la démographie.
+
+zp.csv
+======
+
+Fichier des communes d'Alsace avec leu appartenance à un __territoire de santé__ et une __eone de proximité__.
+
+source: ARS Alsace.
+
+fichier source:
