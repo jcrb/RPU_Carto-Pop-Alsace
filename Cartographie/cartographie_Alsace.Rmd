@@ -90,7 +90,7 @@ st<-com[com$CODE_DEPT==67,]
 save(st,file="carto67.rda")
 ```
 ```{r bas_rhin, echo=TRUE}
-load("Cartofile/carto67.Rda") # st
+load("Cartofile/carto67.rda") # st
 plot(st, main = "Communes du bas-Rhin", axes = TRUE)
 ```
 
@@ -307,12 +307,21 @@ voir aussi: http://help.nceas.ucsb.edu/r:spatial
 
 Utilisation de readOGR{rgdal}
 =============================
-    C'est la méthodes préconisée par Davenport. Je suis arrivé à la faire fonctionner qu'en imposant le directory où sont les fichiers IGN
+
+C'est la méthodes préconisée par Davenport. 
+
+dsn = data source name = dossier où se trouve le shapefile
+layer = nom du fichier sans l'extension SHP
+
 ```{r}
 wd <- getwd()
-file<-"~/Documents/cartographie/Donnee_IGN/GEOFLA_1-1_SHP_LAMB93_FR-ED111/COMMUNES"
-setwd(file)
-ds<-readOGR(dsn="COMMUNE.shp",layer="COMMUNE")
+# version XPS
+# en mode console:  ds<-readOGR(dsn="Cartographie/Cartofile/GEOFLA_2-0_SHP_LAMB93_FR-ED141/COMMUNE",layer="COMMUNE")
+ds<-readOGR(dsn="Cartofile/GEOFLA_2-0_SHP_LAMB93_FR-ED141/COMMUNE",layer="COMMUNE")
+names(ds)
 summary(ds)
 str(ds,2)
+d <- ds@data
+plot(ds[ds$NOM_COM == "STRASBOURG",])
+
 ```
