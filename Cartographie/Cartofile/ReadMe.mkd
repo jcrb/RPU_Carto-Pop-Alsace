@@ -1,0 +1,32 @@
+Cartofile
+==========
+
+GEOFLA_2-0_SHP_LAMB93_FR-ED141
+------------------------------
+
+- Fichier Shapefile
+- Origine: IGN 2014 (dossier RCarto)
+
+als_ts.Rda
+----------
+Territoires de santé en Alsace
+
+Nom du fichier __ctss__
+
+zone_proximite.Rda
+------------------
+Zones de proximité en Alsace
+
+carto67.Rda
+-----------
+
+carto68.Rda
+------------
+
+carto_alsace.Rda
+-----------------
+
+tsvilles.Rda
+-------------
+
+Villes des territoires de proximité

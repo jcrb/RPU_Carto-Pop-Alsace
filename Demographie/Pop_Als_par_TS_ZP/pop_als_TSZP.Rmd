@@ -32,6 +32,13 @@ names(als2012)
 write.csv(als2012, file = paste0(path, "pop_alsace_par_commune_2012/als2012.csv"))
 ```
 
+```{}
+file <- "Demographie/pop_alsace_par_commune_2012/als2012.csv"
+als2012 <- read.csv(file)
+
+```
+
+
 Etape 2, récupérer le fichier des TS et zp
 ```{r}
 path.console <- ""
@@ -50,9 +57,11 @@ merge.als.2012 <- merge(als2012, zp, by.x = "Code.commune", by.y = "CODE.COMMUNE
 
 Population 2012 par territoire de santé
 ---------------------------------------
+pop.ts2012 = population par territoire de santéen 2012
 ```{r}
-n.ts <- tapply(merge.als.2012$Population.municipale, merge.als.2012$LIBELLE.DES.TERRITOIRES.DE.SANTE, sum)
-n.ts
+pop.ts2012 <- tapply(merge.als.2012$Population.municipale, merge.als.2012$LIBELLE.DES.TERRITOIRES.DE.SANTE, sum)
+pop.ts2012
+write.csv(pop.ts2012, file = "../data/pop_ts_2012.csv", , col.names = c("Territoire", "Effectif"))
 ```
 
 Population 2012 par zone de proximité
@@ -60,5 +69,6 @@ Population 2012 par zone de proximité
 ```{r}
 n.zp <- tapply(merge.als.2012$Population.municipale, merge.als.2012$LIBELLE.DES.ZONES.DE.PROXIMITE, sum)
 n.zp
+write.csv(n.zp, file = "../data/pop_zp_2012.csv", col.names = c("Zone de proximité", "Effectif"))
 ```
 
