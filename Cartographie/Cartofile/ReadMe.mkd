@@ -9,9 +9,10 @@ GEOFLA_2-0_SHP_LAMB93_FR-ED141
 
 als_ts.Rda
 ----------
-Territoires de santé en Alsace
-
-Nom du fichier __ctss__
+- Territoires de santé en Alsace
+- SpatialPolygons = ctss
+- Nom du fichier __ctss__
+![als_ts](img/als_ts.png)
 
 zone_proximite.Rda
 ------------------
@@ -19,12 +20,88 @@ Zones de proximité en Alsace
 
 carto67.Rda
 -----------
+- carte de l'ensemble des communes du bas-rhin
+- SpatialPolygonDataFrame
+- nom du fichier __st__
+![carto67](img/carto67.png)
+- base de données associée: __st@data__
+- names: "ID_GEOFLA"  "CODE_COMM"  "INSEE_COM"  "NOM_COMM"   "STATUT"     "X_CHF_LIEU" "Y_CHF_LIEU" "X_CENTROID" "Y_CENTROID" "Z_MOYEN" "SUPERFICIE" "POPULATION" "CODE_CANT"  "CODE_ARR"   "CODE_DEPT"  "NOM_DEPT"   "CODE_REG"   "NOM_REGION"
 
 carto68.Rda
 ------------
+- carte de l'ensemble des communes du haut-rhin
+- SpatialPolygonDataFrame
+- nom du fichier __hr__
+![carto67](img/carto68.png)
+- base de données associée: __st@data__
+- names: "ID_GEOFLA"  "CODE_COMM"  "INSEE_COM"  "NOM_COMM"   "STATUT"     "X_CHF_LIEU" "Y_CHF_LIEU" "X_CENTROID" "Y_CENTROID" "Z_MOYEN" "SUPERFICIE" "POPULATION" "CODE_CANT"  "CODE_ARR"   "CODE_DEPT"  "NOM_DEPT"   "CODE_REG"   "NOM_REGION"
 
 carto_alsace.Rda
 -----------------
+- carte de l'ensemble des communes d'Alsace
+- SpatialPolygonDataFrame
+- nom du fichier __als__
+![carto67](img/carto_alsace.png)
+- base de données associée: __st@data__
+- names: "ID_GEOFLA"  "CODE_COMM"  "INSEE_COM"  "NOM_COMM"   "STATUT"     "X_CHF_LIEU" "Y_CHF_LIEU" "X_CENTROID" "Y_CENTROID" "Z_MOYEN" "SUPERFICIE" "POPULATION" "CODE_CANT"  "CODE_ARR"   "CODE_DEPT"  "NOM_DEPT"   "CODE_REG"   "NOM_REGION"
+
+contour_arr67.Rda
+------------------
+- carte des arrondissements du bas-rhin
+- SpatialPolygons
+- nom du fichier __contour.arr67__
+![contour_arr67](img/contour_arr67.png)
+
+contour_arr68.Rda
+------------------
+- carte des arrondissements du haut-rhin
+- SpatialPolygons
+- nom du fichier __contour.arr68__
+![contour_arr68](img/contour_arr68.png)
+
+contour_cantons67.Rda
+---------------------
+- carte des cantons du bas-rhin
+- SpatialPolygons
+- nom du fichier __contour.cantons67__
+![contour_cantons67](img/contour_cantons67.png)
+
+contour_cantons68.Rda
+---------------------
+- carte des cantons du haut-rhin
+- SpatialPolygons
+- nom du fichier __contour.cantons68__
+![contour_cantons68](img/contour_cantons68.png)
+
+contour_cantons_alsace.Rda
+---------------------
+- carte des cantons d'Alsace
+- SpatialPolygons
+- nom du fichier __contour.cantons.als__
+![contour_cantons_als](img/contour_cantons_als.png)
+
+contour_dep_als.Rda
+---------------------
+- carte des deux départements d'Alsace
+- SpatialPolygons
+- nom du fichier __contour.dep.als__
+![contour_dep_als](img/contour_dep_als.png)
+
+contour_dep_region_als.Rda
+---------------------
+- carte du contour de l'Alsace
+- SpatialPolygons
+- nom du fichier __contour.region.als__
+![contour_region_als](img/contour_region_als.png)
+
+cp.alsace.Rda
+---------------------
+- carte des codes postaux d'Alsace
+- SpatialPolygonsDataFrame
+- nom du fichier __cp.alsace__
+![cp_alsace](img/cp_alsace.png)
+- base de données associée: __cp.alsace@data__
+- names: "ID"      "LIB"     "DEP"     "SURF"    "POP2010" "X_COL6" 
 
 tsvilles.Rda
 -------------
