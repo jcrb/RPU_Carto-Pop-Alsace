@@ -1,0 +1,214 @@
+Cartofile
+==========
+
+Atlas des cartes de l'Alsace en lien avec les RPU. Contient également des fichiers de geolocalisation.
+
+GEOFLA_2-0_SHP_LAMB93_FR-ED141
+------------------------------
+
+- Fichier Shapefile
+- Origine: IGN 2014 (dossier RCarto)
+
+als_ts.Rda
+----------
+- Territoires de santé en Alsace
+- SpatialPolygons = ctss
+- Chargement: load("~/Documents/Resural/Stat Resural/RPU_Doc/RPU_Carto-Pop-Alsace/Cartographie/Cartofile/als_ts.Rda")
+- Nom du fichier __ctss__
+![als_ts](img/als_ts.png)
+
+zone_proximite.Rda
+------------------
+Zones de proximité en Alsace
+
+carto67.Rda
+-----------
+- carte de l'ensemble des communes du bas-rhin
+- SpatialPolygonDataFrame
+- Chargement: load("~/Documents/Resural/Stat Resural/RPU_Doc/RPU_Carto-Pop-Alsace/Cartographie/Cartofile/carto67.Rda")
+- nom du fichier __st__
+![carto67](img/carto67.png)
+- base de données associée: __st@data__
+- names: "ID_GEOFLA"  "CODE_COMM"  "INSEE_COM"  "NOM_COMM"   "STATUT"     "X_CHF_LIEU" "Y_CHF_LIEU" "X_CENTROID" "Y_CENTROID" "Z_MOYEN" "SUPERFICIE" "POPULATION" "CODE_CANT"  "CODE_ARR"   "CODE_DEPT"  "NOM_DEPT"   "CODE_REG"   "NOM_REGION"
+
+carto68.Rda
+------------
+- carte de l'ensemble des communes du haut-rhin
+- SpatialPolygonDataFrame
+- Chargement: load("~/Documents/Resural/Stat Resural/RPU_Doc/RPU_Carto-Pop-Alsace/Cartographie/Cartofile/carto68.Rda")
+- nom du fichier __hr__
+![carto67](img/carto68.png)
+- base de données associée: __st@data__
+- names: "ID_GEOFLA"  "CODE_COMM"  "INSEE_COM"  "NOM_COMM"   "STATUT"     "X_CHF_LIEU" "Y_CHF_LIEU" "X_CENTROID" "Y_CENTROID" "Z_MOYEN" "SUPERFICIE" "POPULATION" "CODE_CANT"  "CODE_ARR"   "CODE_DEPT"  "NOM_DEPT"   "CODE_REG"   "NOM_REGION"
+
+carto_alsace.Rda
+-----------------
+- carte de l'ensemble des communes d'Alsace
+- SpatialPolygonDataFrame
+- Chargement: load("~/Documents/Resural/Stat Resural/RPU_Doc/RPU_Carto-Pop-Alsace/Cartographie/Cartofile/carto_alsace.Rda")
+- nom du fichier __als__
+![carto67](img/carto_alsace.png)
+- base de données associée: __st@data__
+- names: "ID_GEOFLA"  "CODE_COMM"  "INSEE_COM"  "NOM_COMM"   "STATUT"     "X_CHF_LIEU" "Y_CHF_LIEU" "X_CENTROID" "Y_CENTROID" "Z_MOYEN" "SUPERFICIE" "POPULATION" "CODE_CANT"  "CODE_ARR"   "CODE_DEPT"  "NOM_DEPT"   "CODE_REG"   "NOM_REGION"
+
+contour_arr67.Rda
+------------------
+- carte des arrondissements du bas-rhin
+- SpatialPolygons
+- Chargement: load("~/Documents/Resural/Stat Resural/RPU_Doc/RPU_Carto-Pop-Alsace/Cartographie/Cartofile/contour_arr67.Rda")
+- nom du fichier __contour.arr67__
+![contour_arr67](img/contour_arr67.png)
+
+contour_arr68.Rda
+------------------
+- carte des arrondissements du haut-rhin
+- SpatialPolygons
+- Chargement: load("~/Documents/Resural/Stat Resural/RPU_Doc/RPU_Carto-Pop-Alsace/Cartographie/Cartofile/contour_arr68.Rda")
+- nom du fichier __contour.arr68__
+![contour_arr68](img/contour_arr68.png)
+
+contour_cantons67.Rda
+---------------------
+- carte des cantons du bas-rhin
+- SpatialPolygons
+- Chargement: load("~/Documents/Resural/Stat Resural/RPU_Doc/RPU_Carto-Pop-Alsace/Cartographie/Cartofile/contour_cantons67.Rda")
+- nom du fichier __contour.cantons67__
+![contour_cantons67](img/contour_cantons67.png)
+
+contour_cantons68.Rda
+---------------------
+- carte des cantons du haut-rhin
+- SpatialPolygons
+- Chargement: load("~/Documents/Resural/Stat Resural/RPU_Doc/RPU_Carto-Pop-Alsace/Cartographie/Cartofile/contour_cantons68.Rda")
+- nom du fichier __contour.cantons68__
+![contour_cantons68](img/contour_cantons68.png)
+
+contour_cantons_alsace.Rda
+---------------------
+- carte des cantons d'Alsace
+- SpatialPolygons
+- Chargement: load("~/Documents/Resural/Stat Resural/RPU_Doc/RPU_Carto-Pop-Alsace/Cartographie/Cartofile/contour_cantons_alsace.Rda")
+- nom du fichier __contour.cantons.als__
+![contour_cantons_als](img/contour_cantons_als.png)
+
+contour_dep_als.Rda
+---------------------
+- carte des deux départements d'Alsace
+- SpatialPolygons
+- Chargement: load("~/Documents/Resural/Stat Resural/RPU_Doc/RPU_Carto-Pop-Alsace/Cartographie/Cartofile/contour_dep_als.Rda")
+- nom du fichier __contour.dep.als__
+![contour_dep_als](img/contour_dep_als.png)
+
+contour_dep_region_als.Rda
+---------------------
+- carte du contour de l'Alsace
+- SpatialPolygons
+- Chargement: load("~/Documents/Resural/Stat Resural/RPU_Doc/RPU_Carto-Pop-Alsace/Cartographie/Cartofile/contour_region_als.Rda")
+- nom du fichier __contour.region.als__
+![contour_region_als](img/contour_region_als.png)
+
+cp.alsace.Rda
+---------------------
+- carte des codes postaux d'Alsace
+- SpatialPolygonsDataFrame
+- Chargement: load("~/Documents/Resural/Stat Resural/RPU_Doc/RPU_Carto-Pop-Alsace/Cartographie/Cartofile/cp.alsace.Rda")
+- nom du fichier __cp.alsace__
+![cp_alsace](img/cp_alsace.png)
+- base de données associée: __cp.alsace@data__
+- names: "ID"      "LIB"     "DEP"     "SURF"    "POP2010" "X_COL6" 
+
+cp67.Rda
+---------------------
+- carte des codes postaux du bas-rhin
+- SpatialPolygonsDataFrame
+- chargement: load("~/Documents/Resural/Stat Resural/RPU_Doc/RPU_Carto-Pop-Alsace/Cartographie/Cartofile/cp67.Rda")
+- nom du fichier __cp67__
+![cp_alsace](img/cp67.png)
+- base de données associée: __cp.67@data__
+- names: "ID"      "LIB"     "DEP"     "SURF"    "POP2010" "X_COL6"
+
+cp68.Rda
+---------------------
+- carte des codes postaux du haut-rhin
+- SpatialPolygonsDataFrame
+- chargement: load("~/Documents/Resural/Stat Resural/RPU_Doc/RPU_Carto-Pop-Alsace/Cartographie/Cartofile/cp68.Rda")
+- nom du fichier __cp68__
+![cp_alsace](img/cp68.png)
+- base de données associée: __cp.68@data__
+- names: "ID"      "LIB"     "DEP"     "SURF"    "POP2010" "X_COL6"
+
+zone_proximite.Rda
+--------------------
+- Carte des zones de proximité d'Alsace
+- SpatialPolygons
+- Chargement: load("~/Documents/Resural/Stat Resural/RPU_Doc/RPU_Carto-Pop-Alsace/Cartographie/Cartofile/zone_proximite.Rda")
+- nom du fichier __czps__
+![czps](img/czps.png)
+
+
+tsvilles.Rda
+-------------
+- Coordonnées Lambert des chef-lieu des territoires de proximité
+```
+              NOM XLAMB93 YLAMB93
+27201 WISSEMBOURG   10614   68933
+27481    SELESTAT   10304   68048
+27520    HAGUENAU   10514   68680
+27574     SAVERNE   10206   68579
+27638   SCHIRMECK   10117   68281
+27661  STRASBOURG   10504   68409
+27807 SAINT-LOUIS   10429   67305
+27868       THANN   10071   67531
+27886    ALTKIRCH   10183   67333
+27940      COLMAR   10241   67846
+27970    MULHOUSE   10250   67476
+28053  GUEBWILLER   10144   67647
+```
+- chargement: load("~/Documents/Resural/Stat Resural/RPU_Doc/RPU_Carto-Pop-Alsace/Cartographie/Cartofile/tsvilles.Rda")
+
+zp.csv
+-------
+
+- Liste des villes d'Alsace avec leur appartenance à un __Territoire de santé__ et une __zone de proximité__.
+- Chargement: communes <- read.csv("~/Documents/Resural/Stat Resural/RPU_Doc/RPU_Carto-Pop-Alsace/Cartographie/Cartofile/zp.csv")
+```
+  CODE.DEP CODE.COMMUNE LIBELLE.DES.COMMUNES LIBELLE.DES.TERRITOIRES.DE.SANTE CODE.ZONES.DE.PROXIMITE LIBELLE.DES.ZONES.DE.PROXIMITE
+1       68        68002             Altenach            TERRITOIRE DE SANTE 4                      11                       ALTKIRCH
+2       68        68004             Altkirch            TERRITOIRE DE SANTE 4                      11                       ALTKIRCH
+3       68        68006         Ammerzwiller            TERRITOIRE DE SANTE 4                      11                       ALTKIRCH
+4       68        68010               Aspach            TERRITOIRE DE SANTE 4                      11                       ALTKIRCH
+5       68        68017          Ballersdorf            TERRITOIRE DE SANTE 4                      11                       ALTKIRCH
+6       68        68018         Balschwiller            TERRITOIRE DE SANTE 4                      11                       ALTKIRCH
+```
+villes.csv
+-----------
+
+Extraction du fichier villes de SAGEC
+
+Hopitaux_Alsace.csv"
+--------------------
+- Données et coordonnées des ES MCO d'Alsace
+- Chargement: hop <- read.csv("~/Documents/Resural/Stat Resural/RPU_Doc/RPU_Carto-Pop-Alsace/Cartographie/Cartofile/Hopitaux_Alsace.csv")
+- Contenu: 
+```
+"HOPITAL"
+"LAT"
+"LONG"
+"LAMB93_X"
+"LAMB93_Y"
+"RPU_NAME"
+"FINESSG"
+"FINESSJ"
+"GROUPE"
+"TERRITOIRE"
+"ZONEP"
+"TYPE"
+"STATUT"
+"LITS_TOT"
+"LITS_MED"
+"LITS_CHIR"
+"LITS_REA"
+"URG_JOUR"
+"COMPETENCE"
+"SOURCE"
+``` 

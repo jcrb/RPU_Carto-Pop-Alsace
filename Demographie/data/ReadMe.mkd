@@ -1,0 +1,16 @@
+pyramide_pop_alsace_2014
+========================
+
+Population d'Alsace par département, sexe et tranches d'ages de 5 ans. les deux premières lignes sont à supprimer.
+
+Dérive du fichier source __poptc02104.xls__
+
+pop_ts_2012.csv
+===============
+
+Population totale d'Alsace par territoire de santé en 2012
+
+pop_zp_2012.csv
+===============
+
+Population totale d'Alsace par zone de proximité de santé en 2012

@@ -90,6 +90,9 @@ als2012 &lt;- rbind(f67, f68)
 names(als2012)
 # sauvegarde du fichier
 write.csv(als2012, file = paste0(path, &quot;pop_alsace_par_commune_2012/als2012.csv&quot;))</code></pre>
+<pre><code>file &lt;- &quot;Demographie/pop_alsace_par_commune_2012/als2012.csv&quot;
+als2012 &lt;- read.csv(file)
+</code></pre>
 <p>Etape 2, récupérer le fichier des TS et zp</p>
 <pre class="r"><code>path.console &lt;- &quot;&quot;
 path &lt;- &quot;../../&quot;
@@ -102,12 +105,16 @@ als2012 &lt;- read.csv(paste0(path, &quot;pop_alsace_par_commune_2012/als2012.cs
 merge.als.2012 &lt;- merge(als2012, zp, by.x = &quot;Code.commune&quot;, by.y = &quot;CODE.COMMUNE&quot;, all.x = TRUE)</code></pre>
 <div id="population-2012-par-territoire-de-sante" class="section level2">
 <h2>Population 2012 par territoire de santé</h2>
-<pre class="r"><code>n.ts &lt;- tapply(merge.als.2012$Population.municipale, merge.als.2012$LIBELLE.DES.TERRITOIRES.DE.SANTE, sum)
-n.ts</code></pre>
+<p>pop.ts2012 = population par territoire de santéen 2012</p>
+<pre class="r"><code>pop.ts2012 &lt;- tapply(merge.als.2012$Population.municipale, merge.als.2012$LIBELLE.DES.TERRITOIRES.DE.SANTE, sum)
+pop.ts2012</code></pre>
 <pre><code>## TERRITOIRE DE SANTE 1 TERRITOIRE DE SANTE 2 TERRITOIRE DE SANTE 3 
 ##                358060                638816                379681 
 ## TERRITOIRE DE SANTE 4 
 ##                483312</code></pre>
+<pre class="r"><code>write.csv(pop.ts2012, file = &quot;../data/pop_ts_2012.csv&quot;, , col.names = c(&quot;Territoire&quot;, &quot;Effectif&quot;))</code></pre>
+<pre><code>## Warning in write.csv(pop.ts2012, file = &quot;../data/pop_ts_2012.csv&quot;, ,
+## col.names = c(&quot;Territoire&quot;, : attempt to set 'col.names' ignored</code></pre>
 </div>
 <div id="population-2012-par-zone-de-proximite" class="section level2">
 <h2>Population 2012 par zone de proximité</h2>
@@ -121,6 +128,9 @@ n.zp</code></pre>
 ##             153829              76051             118660 
 ##         STRASBOURG              THANN        WISSEMBOURG 
 ##             473375              67314              58862</code></pre>
+<pre class="r"><code>write.csv(n.zp, file = &quot;../data/pop_zp_2012.csv&quot;, col.names = c(&quot;Zone de proximité&quot;, &quot;Effectif&quot;))</code></pre>
+<pre><code>## Warning in write.csv(n.zp, file = &quot;../data/pop_zp_2012.csv&quot;, col.names =
+## c(&quot;Zone de proximité&quot;, : attempt to set 'col.names' ignored</code></pre>
 </div>
 
 
