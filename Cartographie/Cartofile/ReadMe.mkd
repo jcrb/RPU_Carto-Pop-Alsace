@@ -185,7 +185,7 @@ villes.csv
 
 Extraction du fichier villes de SAGEC
 
-Hopitaux_Alsace.csv"
+Hopitaux_Alsace.csv
 --------------------
 - Données et coordonnées des ES MCO d'Alsace
 - Chargement: hop <- read.csv("~/Documents/Resural/Stat Resural/RPU_Doc/RPU_Carto-Pop-Alsace/Cartographie/Cartofile/Hopitaux_Alsace.csv")
@@ -212,3 +212,25 @@ Hopitaux_Alsace.csv"
 "COMPETENCE"
 "SOURCE"
 ``` 
+
+Hop93
+-----
+
+Hôpitaux d 'Alsace (voir _Hopitaux_Alsace.csv_) enregistrés au format __Lambert93__. Il s'agit d'un SpatialPointsDataFrame.
+
+Lecture: load("~/Documents/Resural/Stat Resural/RPU_Doc/RPU_Carto-Pop-Alsace/Cartographie/Cartofile/hop93.Rda")
+
+Utilisation: plot(hop93, pch = 16, col = "red", add = TRUE)
+
+![hop93](img/hopitaux_alsace.png)
+
+HopAlsLamb93
+-------------
+
+Hôpitaux d 'Alsace (voir _Hopitaux_Alsace.csv_) enregistrés au format __SHAPEFILE Lambert93__. Il s'agit d'un SpatialPointsDataFrame.
+
+
+HopAlsWSG84
+-------------
+
+Hôpitaux d 'Alsace (voir _Hopitaux_Alsace.csv_) enregistrés au format __SHAPEFILE WSG84__. Il s'agit d'un SpatialPointsDataFrame.

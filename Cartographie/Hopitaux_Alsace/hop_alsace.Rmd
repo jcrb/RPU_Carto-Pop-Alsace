@@ -1,0 +1,56 @@
+---
+title: "Hôpitaux d'Alsace"
+author: "JcB - RESURAL"
+date: "10/01/2016"
+output:
+  html_document:
+    keep_md: yes
+    number_sections: yes
+---
+
+```{r}
+
+file <- "../Cartofile/Hopitaux_Alsace.csv"
+hop <- read.csv(file)
+
+names(hop)
+```
+Transformation de hop en SpatialPointsDataFrame
+-----------------------------------------------
+On crée l'objet à partir des colonnes LONG et LAT donc implicitement au format WSG84 et on l'enregistre au format SHP.
+```{r}
+library(sp)
+library(rgdal)
+coordinates(hop) = ~ LONG + LAT
+proj4string(hop) = CRS("+proj=longlat +datum=WGS84")
+# writeOGR(hop, "../Cartofile/HopAlsWSG84", "hopalsWsg", "ESRI Shapefile")
+```
+
+Reprojection de la couche au format Lambert 93
+----------------------------------------------
+
+L'objet hop est transformé dans le référentiel Lambert 93 pour être compatible avec les cartes IGN. Le nouvel objet est sauvegardé au format Shapefile et Rda. On peut ouvrir le Shapefile avec QGis et le Rda avec R. Les sauvegardes sont neutralisées pour ne pas modifier accidentellement les fichiers.
+
+```{r}
+# EPSG:2154 Lambert 93
+newProj = CRS("+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs")
+newHop <- spTransform(hop, newProj)
+# writeOGR(newHop, "../Cartofile/HopAlsLamb93", "hopalsL93", "ESRI Shapefile")
+
+hop93 <- newHop
+# save(hop93, file = "../Cartofile/hop93.Rda")
+```
+
+Affichage de la carte de l'Alsace avec les hôpitaux
+---------------------------------------------------
+
+```{r, fig.height=8}
+par(mar = c(0,0,0,0))
+load("../Cartofile/contour_cantons_alsace.Rda")
+load("../Cartofile/contour_region_als.Rda")
+plot(contour.cantons.als, col = "lightblue", border = "gray70")
+plot(hop93, pch = 16, col = "red", add = TRUE)
+plot(contour.region.als, border = "cornflowerblue", lwd = 3, add = TRUE)
+
+```
+

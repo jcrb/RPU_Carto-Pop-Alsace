@@ -1,5 +1,5 @@
 ---
-title: "Cartographie"
+title: "Cartographie vectorielle avec R"
 author: "jcb"
 date: "20 juillet 2015"
 output:
@@ -12,6 +12,62 @@ output:
     toc: yes
 ---
 
+Introduction
+============
+
+Le logiciel __R__ permet de faire des statistiques géographiques et plus simplement de la cartographie vectorielle et raster. Ce document traite de la cartographie vectorielle appliquée à la région Alsace.
+La cartographie vectorielle est principalement basée sur le format __ShapeFile (SHP)__. Les librairies R manipulent des fonds de carte basés sur ce format.
+
+On appelle __géométrie__ des objets spaciaux élémentaires. Un __objet spatial__ est l'association:
+
+- d'une forme géométrique (point, ligne, polygone)
+- d'un repère spatial (longitude, latitude) permettant de situer l'objet
+- d'informations thématiques sur l'objet
+
+Ces 3 informations constituent un __système d'information géographique__ ou __SIG__.
+
+Le format Shapefile (SHP)
+=========================
+
+Description
+-----------
+
+Le [format Shapefile](https://fr.wikipedia.org/wiki/Shapefile) (fichier de formes) a été crée par la firme ESRI avant de devenir un format de fait. Il permet de stocker des géométries (points, lignes, polygones) dans un ensemble de fichiers portant tous le m^eme nom et dont trois sont obligatoires:
+
+- .shp contient la description des __géométries__.
+- .dbf contient les __données attributaires__ (métadonées des géométries: nom, caractéristiques...).
+- .shx contient l'index de la géométrie
+Il peut y avoir plusieurs fichiers supplémentaires notamme,t:
+
+- .prj contient le système de projection utilisé (pat ex. Lambert93)
+Un fichier _shapefile_ ne contient qu'un type de géométrie.
+
+Format SHP et R
+----------------
+
+R lit le format _SHP_ et le stocke dans un _objet spatial_ spécifique de la forme géométrique:
+
+- spatialPoints
+- spatialLines
+- spatialPolygons
+Si l'objet est accompagné de données attributaires, R ajoute un dataframe qui stocke ces données. L'ensemle est décrit par 3 objets supplémentaires:
+
+- spatialPointsDataFrame
+- spatialLinesDataFrame
+- spatialPolygonsDataFrame
+
+Les différents éléments constituant un objet spatial dans R sont stockés dans des objet _list_ appelés _slots_. Il y a 4 slots de base dans un objet spatial R que l'on atteint en utilisant le séparateur '@':
+```{}
+spatialPolygonsDataFrame@nom_du_slot
+```
+
+- @data: dataframe des données attributaires
+- @polygons: liste des objets géométriques
+- @ : rectangle englobant
+- @prj: projection de l'objet
+
+
+
 ```{r init, echo=FALSE, comment="", message=FALSE}
 # librairies cartographiques de R
 source("Routines/lib_carto.R")
@@ -19,6 +75,13 @@ source("Routines/lib_carto.R")
 
 Les fichiers cartographiques de base
 =====================================
+
+Il a deux sortes de sources cartographiques librement accessibles:
+
+- données IGN au format Lambert (généralement Lambert93)
+- les données OSM au format WS84
+
+On peut passer d'un format à l'autre en modifiant le contenu du slot _prj_.
 
 Le fichier IGN des communes
 ---------------------------
@@ -305,10 +368,13 @@ Ref: Notes on spatial data operations in R ([Frank Davenport mars 2013](https://
 
 voir aussi: http://help.nceas.ucsb.edu/r:spatial
 
-Utilisation de readOGR{rgdal}
-=============================
+Utilisation de la library rgdal
+===============================
 
-C'est la méthodes préconisée par Davenport. 
+readOGR
+-------
+
+C'est la méthodes préconisée par Davenport. Cette fonction permet de lire un fichier SHP. L'identification de la géométrie se fait automatiquement.
 
 dsn = data source name = dossier où se trouve le shapefile
 layer = nom du fichier sans l'extension SHP
@@ -325,3 +391,42 @@ d <- ds@data
 plot(ds[ds$NOM_COM == "STRASBOURG",])
 
 ```
+
+writeOGR (Créer un SHP)
+--------
+
+Cette fonction permet de sauvegarder des données au format SHP.
+
+A partir du fichier __Hopitaux_Alsace.csv__ qui contient la liste des hôpitaux ayant un service d'urgence avec leurs coordonnées WSG84 et Lambert 93, on crée un _SpatialPointDataFrame_ qui est sauvegardé au format _Shapefile_ (SHP). Exemple tiré de insee.rmd (Demographie).
+
+### Lambert93
+```{}
+library(rgdal)
+library(sp)
+hop <- read.csv("~/Documents/Resural/Stat Resural/RPU_Doc/RPU_Carto-Pop-Alsace/Cartographie/Cartofile/Hopitaux_Alsace.csv")
+# transformation de hop en SpatialPointDataFrame
+coordinates(hop) <- ~LAMB93_X+LAMB93_Y
+# Sauvegarde au format SHP
+writeOGR(hop, "INSEE/hop_Lambert", "hop_Lamb_shp", driver = "ESRI Shapefile")
+plot(hop, pch = 16, col = "red")
+
+# save(hop, file = "~/Documents/Resural/Stat Resural/RPU_Doc/RPU_Carto-Pop-Alsace/Cartographie/Cartofile/Hopitaux_Alsace_Lambert.Rda")
+```
+
+### WSG84
+```{}
+hop <- read.csv("~/Documents/Resural/Stat Resural/RPU_Doc/RPU_Carto-Pop-Alsace/Cartographie/Cartofile/Hopitaux_Alsace.csv")
+coordinates(hop) <- ~LAT+LONG
+writeOGR(hop, "INSEE/hop_wsg84", "hop_shp", driver = "ESRI Shapefile")
+```
+
+
+
+Discretisation d'une variable
+=============================
+
+En cartographie il est souvent nécessaire de discréditer une variable. Méthodes possibles:
+
+- fonction __cut__
+- fonction classIntervals (package classInt)
+- fonction dicretization (package cartography)
