@@ -38,6 +38,7 @@ Le dossier cartographie comporte les sous-dossier:
     - code-insee-postaux-geoflar-Alsace_2013: fichier SHP résultant du croisement des codes Insee, Postaux et Geofla.
     - code_postaux_v201410.csv: 4 variables (code INSEE, nom commune, code postal, libellé d'acheminement)
     - codes_postaux: dossier SHP contenant le tracé des codes postaux
+- Structures_Urgence_FEDORU: liste des SU avec geolocalisation des membres de la Fedoru
     
 Démographie
 -----------
